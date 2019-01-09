@@ -1,0 +1,60 @@
+apply plugin: 'com.android.application'
+android {
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword '123456'
+            storeFile file('D:/TestDemo/WTDemo/app/key.jks')
+            storePassword '123456'
+        }
+    }
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.fdbank.newmobile"
+        minSdkVersion 19
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.config
+    }
+    buildTypes {
+        release {
+            //gradle的DSL--groovy完全兼容java，所以对于以上方法我们完全可以用java的方法来写
+            minifyEnabled false
+//            boolean a = minifyEnabled
+//            setMinifyEnabled(false)
+
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles(getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro')
+            //
+            buildConfigField "String", "isRelease", "\"${isRelease}\""
+//            buildConfigField("String", "isRelease", "\"${isRelease}\"")
+            buildConfigField("String", "isLKLMode", "\"${isLKLMode}\"")
+        }
+        debug {
+            buildConfigField "String", "isRelease", "\"${isRelease}\""
+            buildConfigField("String", "isLKLMode", "\"${isLKLMode}\"")
+        }
+        tencent {
+            buildConfigField "String", "isRelease", "\"${isRelease}\""
+            buildConfigField("String", "isLKLMode", "\"${isLKLMode}\"")
+        }
+        ali {
+            buildConfigField "String", "isRelease", "\"${isRelease}\""
+            buildConfigField("String", "isLKLMode", "\"${isLKLMode}\"")
+        }
+    }
+    dependencies {
+        implementation fileTree(include: ['*.jar'], dir: 'libs')
+        implementation 'com.android.support:appcompat-v7:27.1.1'
+        implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+        testImplementation 'junit:junit:4.12'
+        androidTestImplementation 'com.android.support.test:runner:1.0.2'
+        androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    }
+    productFlavors {
+    }
+}
+dependencies {
+}
